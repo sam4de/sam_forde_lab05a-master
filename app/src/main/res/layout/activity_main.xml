@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="119dp"
-        android:id="@+id/switch1"
+        android:id="@+id/onOffSwitch"
         android:layout_marginTop="47dp"
         android:text="On/Off"
         android:layout_alignParentTop="true"
@@ -25,8 +25,8 @@
         android:text="Accelerometer X:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/switch1"
-        android:layout_alignEnd="@+id/switch1"
+        android:layout_below="@+id/onOffSwitch"
+        android:layout_alignEnd="@+id/onOffSwitch"
         android:layout_marginEnd="65dp"
         android:layout_marginTop="56dp"
         android:id="@+id/AccelXText" />
@@ -77,16 +77,7 @@
         android:layout_alignStart="@+id/accelXValue" />
 
     <TextView
-        android:text="Latitude:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/AccelZText"
-        android:layout_alignEnd="@+id/AccelYText"
-        android:layout_marginTop="113dp"
-        android:id="@+id/LatText" />
-
-    <TextView
-        android:text="Longitude:"
+        android:text="Current Longitude:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/LatText"
@@ -110,4 +101,51 @@
         android:layout_alignBaseline="@+id/LongText"
         android:layout_alignBottom="@+id/LongText"
         android:layout_alignStart="@+id/LatValue" />
+
+    <TextView
+        android:text="Current Latitude:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="29dp"
+        android:id="@+id/LatText"
+        android:layout_below="@+id/AccelZText"
+        android:layout_alignEnd="@+id/AccelYText" />
+
+    <Button
+        android:text="Longitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sendButton1"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/sendButton"
+        android:layout_marginBottom="11dp" />
+
+    <Button
+        android:text="Latitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sendButton"
+        android:layout_below="@+id/LongValue"
+        android:layout_alignEnd="@+id/accelZValue"
+        android:layout_marginTop="29dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/sendText"
+        android:layout_alignBottom="@+id/sendButton"
+        android:layout_alignEnd="@+id/onOffSwitch"
+        android:text="Latitude Num" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:layout_alignBottom="@+id/sendButton1"
+        android:layout_alignParentStart="true"
+        android:id="@+id/sendText1"
+        android:text="Longitude Num" />
 </RelativeLayout>

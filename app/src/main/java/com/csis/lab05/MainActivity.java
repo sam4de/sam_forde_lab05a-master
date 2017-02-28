@@ -19,6 +19,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,7 +63,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         accelZ = (TextView) findViewById(R.id.accelZValue);
         lati = (TextView) findViewById(R.id.LatValue);
         longi = (TextView) findViewById(R.id.LongValue);
-
+        Button send = (Button) findViewById(R.id.sendButton);
+        Button send1 = (Button) findViewById(R.id.sendButton1);
+        Switch initSynthSwitch = (Switch) findViewById(R.id.onOffSwitch);
+        final TextView freqText = (TextView) findViewById(R.id.sendText);
+        final TextView freqText1 = (TextView) findViewById(R.id.sendText1);
 
         mSensorManager = (SensorManager)
         getSystemService(Context.SENSOR_SERVICE);
@@ -72,6 +80,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         super.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
         //For declaring and initialising XML items, Always of form OBJECT_TYPE VARIABLE_NAME = (OBJECT_TYPE) findViewById(R.id.ID_SPECIFIED_IN_XML);
+
+
+
         try { // try the code below, catch errors if things go wrong
             initPD(); //method is below to start PD
             loadPDPatch("synth.pd"); // This is the name of the patch in the zip
@@ -79,6 +90,34 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             e.printStackTrace(); // print error if init or load patch fails.
             finish(); // end program
         }
+        initSynthSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                float val = (isChecked) ?  1.0f : 0.0f; // value = (get value of isChecked, if true val = 1.0f, if false val = 0.0f)
+                sendFloatPD("onOff", val); //send value to patch, receiveEvent names onOff
+
+                //<------Turn on Volume-------------->
+                //This will need its own listener if you provide xml widget to control
+                sendFloatPD("amp",1.0f);
+            }
+        });
+        send1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                sendFloatPD("freq", Float.parseFloat(freqText1.getText().toString()));
+
+            }
+        });
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                sendFloatPD("freq", Float.parseFloat(freqText.getText().toString()));
+
+            }
+        });
+
 if (ActivityCompat.checkSelfPermission(this,
         Manifest.permission.ACCESS_FINE_LOCATION) !=
         PackageManager.PERMISSION_GRANTED &&
@@ -179,10 +218,10 @@ if (ActivityCompat.checkSelfPermission(this,
         Log.i("MyLocation", Double.toString(latitude) + " " +
         Double.toString(longitude));
 
-        sendFloatPD("latValue",Float.parseFloat(Double.toString(latitude)));
+        sendFloatPD("latitude",Float.parseFloat(Double.toString(latitude)));
         lati.setText(String.valueOf(latitude));
 
-        sendFloatPD("longi",Float.parseFloat(Double.toString(longitude)));
+        sendFloatPD("longitude",Float.parseFloat(Double.toString(longitude)));
         longi.setText(String.valueOf(longitude));
     }
 
